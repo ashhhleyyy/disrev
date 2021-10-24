@@ -1,4 +1,4 @@
-from config import DISCORD_TOKEN, DISCORD_WEBHOOK
+from config import DISCORD_CHANNEL, DISCORD_TOKEN, DISCORD_WEBHOOK
 from controller import DisrevController
 import hikari
 import re
@@ -23,6 +23,9 @@ async def run_discord(controller: DisrevController):
     @client.listen()
     async def on_message(event: hikari.GuildMessageCreateEvent):
         if event.message.author.id == client.get_me().id or event.message.author.is_system:
+            return
+
+        if str(event.message.channel_id) != DISCORD_CHANNEL:
             return
 
         if str(event.message.author.id) == webhook_id:
