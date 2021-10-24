@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "disrev"
+version = "0.1.0"
+description = ""
+authors = ["Ash (ashisbored) <ash.b.7558@gmail.com>"]
+license = "MPL-2.0"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+hikari = "^2.0.0-alpha.103"
+python-dotenv = "^0.19.1"
+dhooks = "^1.1.4"
+"revolt.py" = "^0.1.1"
+# revolt.py should have dependencies on these below, but it doesn't for some reason
+aenum = "^3.1.0"
+ulid-py = "^1.1.0"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^21.9b0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
