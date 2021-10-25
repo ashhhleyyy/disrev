@@ -18,3 +18,4 @@ DisRev should be compatible with proxying bots such as PluralKit, as it will for
 ## TODO list
 - [ ] Bridge embeds both ways (waiting for revolt.py to implement embeds)
 - [ ] Use webhooks on revolt side for custom username+avatar when they are implemented
+- [ ] (Maybe) bridge attachments by uploading to the other platform rather than just sending a link

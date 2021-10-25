@@ -41,6 +41,8 @@ async def run_discord(controller: DisrevController):
         print(f'[Discord] [#{event.get_channel().name}] {display_name}: {event.message.content}')
 
         await controller.send_to_revolt(display_name, event.message.content)
+        for attachment in event.message.attachments:
+            await controller.send_to_revolt(display_name, attachment.url)
 
     print('Starting Discord client...')
     await client.start()

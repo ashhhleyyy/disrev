@@ -38,6 +38,9 @@ class RevoltClient(revolt.Client):
 
         await self.controller.send_to_discord(display_name, message.author.avatar.url, message.content)
 
+        for attachment in message.attachments:
+            await self.controller.send_to_discord(display_name, message.author.avatar.url, attachment.url)
+
 async def run_revolt(controller: DisrevController):
     async with aiohttp.ClientSession() as session:
         client = RevoltClient(session, REVOLT_TOKEN, controller)
