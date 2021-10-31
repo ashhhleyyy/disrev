@@ -25,6 +25,9 @@ class RevoltClient(revolt.Client):
         return None
 
     async def on_message(self, message: revolt.Message):
+        if not self.self_user:
+            return
+        
         if message.author.id == self.self_user.id:
             return
         
@@ -36,10 +39,10 @@ class RevoltClient(revolt.Client):
 
         print(f'[Revolt]  [#{channel.name}] {display_name}: {message.content}')
 
-        await self.controller.send_to_discord(display_name, message.author.avatar.url, message.content)
+        await self.controller.send_to_discord(channel.id, display_name, message.author.avatar.url, message.content)
 
         for attachment in message.attachments:
-            await self.controller.send_to_discord(display_name, message.author.avatar.url, attachment.url)
+            await self.controller.send_to_discord(channel.id, display_name, message.author.avatar.url, attachment.url)
 
 async def run_revolt(controller: DisrevController):
     async with aiohttp.ClientSession() as session:

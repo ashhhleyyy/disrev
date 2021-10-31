@@ -14,9 +14,11 @@ dhooks = "^1.1.4"
 # revolt.py should have dependencies on these below, but it doesn't for some reason
 aenum = "^3.1.0"
 ulid-py = "^1.1.0"
+dataclasses-json = "^0.5.6"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^21.9b0", allow-prereleases = true}
+mypy = "^0.910"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -1,19 +1,12 @@
-from config import DISCORD_CHANNEL, DISCORD_TOKEN, DISCORD_WEBHOOK
+from config import DISCORD_TOKEN
 from controller import DisrevController
 import hikari
-import re
-
-WEBHOOK_ID_FROM_URL_REGEX = re.compile(r"^https:\/\/(ptb\.|canary\.)?discord\.com\/api\/webhooks/([0-9]*)/.*$")
-
-
-def get_webhook_id_from_url(url: str) -> str:
-    return WEBHOOK_ID_FROM_URL_REGEX.fullmatch(url).group(2)
 
 
 async def run_discord(controller: DisrevController):
     client = hikari.GatewayBot(token=DISCORD_TOKEN)
 
-    webhook_id = get_webhook_id_from_url(DISCORD_WEBHOOK)
+    webhook_ids = controller.config.discord_webhook_ids
 
     @client.listen()
     async def on_ready(event: hikari.StartedEvent):
@@ -25,10 +18,7 @@ async def run_discord(controller: DisrevController):
         if event.message.author.id == client.get_me().id or event.message.author.is_system:
             return
 
-        if str(event.message.channel_id) != DISCORD_CHANNEL:
-            return
-
-        if str(event.message.author.id) == webhook_id:
+        if str(event.message.author.id) in webhook_ids:
             return
 
         if not event.message.content:
@@ -40,9 +30,9 @@ async def run_discord(controller: DisrevController):
 
         print(f'[Discord] [#{event.get_channel().name}] {display_name}: {event.message.content}')
 
-        await controller.send_to_revolt(display_name, event.message.content)
+        await controller.send_to_revolt(str(event.channel_id), display_name, event.message.content)
         for attachment in event.message.attachments:
-            await controller.send_to_revolt(display_name, attachment.url)
+            await controller.send_to_revolt(str(event.channel_id), display_name, attachment.url)
 
     print('Starting Discord client...')
     await client.start()
