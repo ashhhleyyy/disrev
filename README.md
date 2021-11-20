@@ -16,6 +16,8 @@ Use a JSON-based config file for multi channel mode:
 }
 ```
 
+The `discord_to_revolt` section is a mapping of Discord channel to Revolt channel IDs, and the `revolt_to_webhook` section is a mapping of Revolt channel IDs to Discord webhook URLs.
+
 and the following environment variables (supports `dotenv`):
 ```
 REVOLT_TOKEN
